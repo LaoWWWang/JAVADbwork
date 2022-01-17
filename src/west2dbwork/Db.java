@@ -7,7 +7,7 @@ public class Db {
     static final String DB_URL = "jdbc:mysql://localhost:3306/west2?" +//记得改数据库名字
             "useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     static final String USER = "root";
-    static final String PASS = "4815646";//记得写密码
+    static final String PASS = "";//记得写密码
 
     public static Connection getConnection() {//链接数据库
         Connection conn = null;
@@ -21,7 +21,7 @@ public class Db {
     }
 
     public static void addCity(String cityName,int id,float lat,float lon) {             //添加城市信息
-        String sql = "replace into city_information1(name, id, lat, lon) values(?,?,?,?)";//replace应该就是更新吧，
+        String sql = "replace into city_information(name, id, lat, lon) values(?,?,?,?)";//replace应该就是更新吧，
         Connection conn = null;                                                          //Update也不知道该改些啥
         PreparedStatement pstmt = null;
         try {
@@ -41,7 +41,7 @@ public class Db {
     }
 
     public static void addCityTemp(int id,String fxDate,int tempMax,int tempMin,String textDay){//添加天气信息
-        String sql = "replace into city_weather1(id, fxDate, tempMax, tempMin, textDay) values(?,?,?,?,?)";
+        String sql = "replace into city_weather(id, fxDate, tempMax, tempMin, textDay) values(?,?,?,?,?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         try{
@@ -62,7 +62,7 @@ public class Db {
     }
 
     public static void search(int page){        //说实话，我感觉我写错了，这个分页查询
-        String sql = "SELECT * FROM city_information1 ORDER BY id DESC LIMIT 3 OFFSET ?";
+        String sql = "SELECT * FROM city_information ORDER BY id DESC LIMIT 3 OFFSET ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -85,7 +85,7 @@ public class Db {
     }
 
     public static void search(String name){//根据名字查询城市全部信息
-        String sql = "SELECT * FROM city_information1 i INNER JOIN city_weather1 w ON i.id = w.id where i.name = ?";
+        String sql = "SELECT * FROM city_information i INNER JOIN city_weather w ON i.id = w.id where i.name = ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;

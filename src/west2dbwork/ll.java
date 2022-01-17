@@ -55,7 +55,7 @@ public class ll {
 
     public static void main(String[] args) {
         List<City_information> listOfCity_inf = new ArrayList<>();
-        String key = "6b7b6f28842c4cffba1bd18b9e63ffb0";                                                            //记得写key
+        String key = "6b7b6f28842c4cffba1bd18b9e63ffb0";
         String url = "https://geoapi.qweather.com/v2/city/lookup?key=" + key + "&location=";
         String url1 = "https://devapi.qweather.com/v7/weather/3d?key=" + key + "&location=";
         int city_id,page;
