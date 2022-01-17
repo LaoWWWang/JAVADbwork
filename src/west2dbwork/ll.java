@@ -55,10 +55,28 @@ public class ll {
 
     public static void main(String[] args) {
         List<City_information> listOfCity_inf = new ArrayList<>();
-        String key = "";                                                            //记得写key
+        String key = "6b7b6f28842c4cffba1bd18b9e63ffb0";                                                            //记得写key
         String url = "https://geoapi.qweather.com/v2/city/lookup?key=" + key + "&location=";
         String url1 = "https://devapi.qweather.com/v7/weather/3d?key=" + key + "&location=";
         int city_id,page;
+        String[] str = new String[]{"上海","北京","福州"};
+        for(int i = 0;i<3;i++){
+            try {
+                str[i] = URLEncoder.encode(str[i], "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            JSONObject res_city_inf12 = sendGet(url + str[i]).getJSONArray("location").getJSONObject(0);
+            Db.addCity(res_city_inf12.getString("name"), res_city_inf12.getInteger("id"),
+                    res_city_inf12.getFloat("lat"), res_city_inf12.getFloat("lon"));
+            int city_id3 = res_city_inf12.getInteger("id");
+            JSONArray res_city_wea12 = sendGet(url1 + city_id3).getJSONArray("daily");
+            for (int j = 0; j < res_city_wea12.size(); j++) {
+                JSONObject city_wea = res_city_wea12.getJSONObject(j);
+                Db.addCityTemp(city_id3,city_wea.getString("fxDate"),city_wea.getInteger("tempMax"),
+                        city_wea.getInteger("tempMin"),city_wea.getString("textDay"));
+            }
+        }
         Scanner scanner = new Scanner(System.in);
         System.out.println("输入查询城市");
         String city_name = scanner.nextLine();
